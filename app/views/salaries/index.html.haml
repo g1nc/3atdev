@@ -1,6 +1,7 @@
 .row
   .col-sm-10
-    %h4= "Payments from "
+    %h4
+      = "Payments from #{@salaries.first.starts_at.strftime("%b %d, %Y")} to #{@salaries.last.ends_at.strftime("%b %d, %Y")}"
   .col-sm-2
     = link_to 'Add Payment', new_salary_path, class: 'btn submit-btn'
   .col-sm-12

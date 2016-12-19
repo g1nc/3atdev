@@ -2,7 +2,7 @@ class SalariesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @salaries = Salary.order(ends_at: :desc).page params[:page]
+    @salaries = Salary.order(ends_at: :asc).page params[:page]
   end
 
   def new
@@ -12,6 +12,6 @@ class SalariesController < ApplicationController
 
   def destroy
     Salary.find(params[:id]).delete
-    redirect_to salaries_path
+    redirect_to :back
   end
 end
