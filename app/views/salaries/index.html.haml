@@ -20,3 +20,6 @@
             %td
               - if salary.user == current_user
                 = link_to 'Delete', salary, method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' }
+
+  .col-sm-12
+    =paginate @salaries

@@ -2,7 +2,7 @@ class SalariesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @salaries = Salary.all
+    @salaries = Salary.order(ends_at: :desc).page params[:page]
   end
 
   def new
