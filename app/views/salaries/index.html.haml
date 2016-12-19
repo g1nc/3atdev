@@ -1,0 +1,12 @@
+%table
+  %tr
+    %th #
+    %th Dates
+    %th Creator
+    %th Actions
+  - @salaries.each do |salary|
+    %tr
+      %td= salary.id
+      %td= "#{salary.starts_at} - #{salary.ends_at}"
+      %td= salary.user.email
+      %td

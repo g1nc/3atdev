@@ -1,0 +1,30 @@
+
+.col-lg-8.col-lg-offset-2
+  = form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'form-horizontal'}) do |f|
+
+    .form-group
+      = f.label :email, class: 'col-sm-2 control-label'
+      .col-sm-10
+        = f.email_field :email, autofocus: true, class: 'form-control', placeholder: 'Login or Email'
+
+    .form-group
+      = f.label :password, class: 'col-sm-2 control-label'
+      .col-sm-10
+        = f.password_field :password, autocomplete: 'off', class: 'form-control', placeholder: 'password'
+
+    .form-group
+      .col-sm-offset-2.col-sm-10
+        .checkbox
+          %label
+            = f.check_box :remember_me
+            Remeber me
+
+    .form-group
+      .col-sm-offset-2.col-sm-10
+        = f.submit 'Login', class: 'btn btn-default submit-btn'
+
+    .form-group
+      .col-sm-offset-2.col-sm-10
+        Need an account?
+        = link_to 'Register', new_user_registration_path
+

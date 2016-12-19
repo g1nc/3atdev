@@ -14,3 +14,29 @@
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+$default-color: #5BC0DE;
+
+.submit-btn {
+  width: 100%;
+  background: $default-color;
+  color: white;
+  border: 0;
+  &:hover {
+    background: $default-color;
+    color: white;
+  }
+}
+
+.navbar-default {
+  background: $default-color;
+  color: white;
+  border: none;
+  .navbar-brand {
+    color: white;
+  }
+  .navbar-nav > li > a {
+    color: white;
+  }
+}
+
