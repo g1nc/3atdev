@@ -16,7 +16,7 @@
             %li= link_to 'Main page', '#'
             %li= link_to 'Payments', salaries_path
           %ul.nav.navbar-nav.navbar-right
-            %li= link_to 'Logout', destroy_user_session_path, method: :delete
+            %li= link_to "Logout (#{current_user.email})", destroy_user_session_path, method: :delete
 
     .container
       .row

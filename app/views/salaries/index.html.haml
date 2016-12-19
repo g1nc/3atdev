@@ -1,12 +1,22 @@
-%table
-  %tr
-    %th #
-    %th Dates
-    %th Creator
-    %th Actions
-  - @salaries.each do |salary|
-    %tr
-      %td= salary.id
-      %td= "#{salary.starts_at} - #{salary.ends_at}"
-      %td= salary.user.email
-      %td
+.row
+  .col-sm-10
+    %h4= "Payments from "
+  .col-sm-2
+    = link_to 'Add Payment', new_salary_path, class: 'btn submit-btn'
+  .col-sm-12
+    %table.table.table-striped
+      %thead
+        %tr
+          %th #
+          %th Dates
+          %th Creator
+          %th Actions
+      %tbody
+        - @salaries.each do |salary|
+          %tr
+            %td= salary.id
+            %td= "#{salary.starts_at.strftime("%b %d, %Y")} - #{salary.ends_at.strftime("%b %d, %Y")}"
+            %td= salary.user.email
+            %td
+              - if salary.user == current_user
+                = link_to 'Delete', salary, method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' }
