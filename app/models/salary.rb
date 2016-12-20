@@ -39,6 +39,6 @@ class Salary < ApplicationRecord
   end
 
   def delete_payment(user)
-    delete if self.user == user
+    self.destroy if self.user == user
   end
 end
