@@ -20,7 +20,22 @@
             %td= salary.user.email
             %td
               - if salary.user == current_user
-                = link_to 'Delete', salary, method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' }
+                = link_to 'Delete', salary, method: :delete, class: 'btn btn-danger salary-delete', data: { confirm: 'Are you sure?', id: salary.id }
 
   .col-sm-12
-    =paginate @salaries
+    = paginate @salaries
+
+
+  .modal.fade
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %button.close
+            %span &times;
+          %h4.modal-title Modal title
+
+        .modal-body
+          %p Text
+        .modal-footer
+          %button.btn.btn-default{ data: { dissmiss: 'modal' } } Close
+          %button.btn.btn-primary Save

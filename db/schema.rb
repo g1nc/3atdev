@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161219104615) do
+ActiveRecord::Schema.define(version: 20161220071128) do
 
   create_table "salaries", force: :cascade do |t|
     t.date     "starts_at"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(version: 20161219104615) do
     t.datetime "remember_created_at"
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
+    t.string   "login"
+    t.string   "username"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
