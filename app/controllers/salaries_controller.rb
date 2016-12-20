@@ -11,8 +11,7 @@ class SalariesController < ApplicationController
   end
 
   def destroy
-    @salary = Salary.find(params[:id])
-    @salary.delete_payment current_user unless @salary.nil?
-    redirect_back(fallback_location: root_path)
+    Salary.find(params[:id]).delete_payment current_user
+    redirect_to root_path
   end
 end
