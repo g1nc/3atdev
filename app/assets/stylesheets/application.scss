@@ -40,3 +40,8 @@ $default-color: #5BC0DE;
   }
 }
 
+.pagination > .active > a {
+  background-color: $default-color;
+  border-color: $default-color;
+}
+
