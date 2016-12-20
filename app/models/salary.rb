@@ -1,44 +1,52 @@
 class Salary < ApplicationRecord
+  PAYMENT_DAYS = [5, 15, 20]
+
+  belongs_to :user
   validates :user_id, presence: true
   before_save :set_dates
 
-  belongs_to :user
+  def self.min_start_date
+    Salary.order(starts_at: :asc).first.starts_at
+  end
 
-  FIRST_DATE = 5
-  SECOND_DATE = 20
+  def self.max_end_date
+    Salary.order(ends_at: :asc).last.ends_at
+  end
+
+  private
 
   def set_dates
-    if Salary.count.zero?
-      if near_first_date?
-        starts_at = Date.new(Date.today.year, Date.today.month, FIRST_DATE)
-        ends_at = Date.new(Date.today.year, Date.today.month, SECOND_DATE - 1)
-      else
-        starts_at = Date.new(Date.today.year, Date.today.month, SECOND_DATE)
-        ends_at = Date.new(Date.today.year, Date.today.month, FIRST_DATE - 1)
-      end
-      ends_at += 1.month
-
-      self.starts_at = starts_at
-      self.ends_at = ends_at
+    last = last_payment
+    if last.nil?
+      self.starts_at = get_starts_at
+      self.ends_at = get_ends_at(self.starts_at)
     else
-      last_payment = Salary.order(:created_at).last
-      self.starts_at = Date.new(last_payment.ends_at.year, last_payment.ends_at.month, last_payment.ends_at.day + 1)
-
-      if last_payment.ends_at.day + 1 == FIRST_DATE
-        ends_at = Date.new(self.starts_at.year, self.starts_at.month, SECOND_DATE - 1)
-      else
-        ends_at = Date.new(self.starts_at.year, self.starts_at.month, FIRST_DATE - 1)
-        ends_at += 1.month
-      end
-      self.ends_at = ends_at
+      self.starts_at = last.ends_at + 1.day
+      self.ends_at = get_ends_at(self.starts_at)
     end
   end
 
-  def near_first_date?
-    Date.today.day - FIRST_DATE < Date.today.day - SECOND_DATE
+  def last_payment
+    Salary.order(:created_at).last
   end
 
-  def delete_payment(user)
-    self.destroy if self.user == user
+  def get_starts_at
+    diff = {}
+    PAYMENT_DAYS.each_with_index do |val, index|
+      diff[index] = Date.today.day - val
+    end
+    nearest = diff.sort_by { |index, val| val }[0][0]
+    Date.new(Date.today.year, Date.today.month, PAYMENT_DAYS[nearest])
+  end
+
+  def get_ends_at (date)
+    current_day_index = PAYMENT_DAYS.index(date.day)
+    if current_day_index == PAYMENT_DAYS.count - 1
+      end_date = Date.new(date.year, date.month, PAYMENT_DAYS[0] - 1)
+      end_date += 1.month
+    else
+      end_date = Date.new(date.year, date.month, PAYMENT_DAYS[current_day_index + 1] - 1)
+    end
+    end_date
   end
 end

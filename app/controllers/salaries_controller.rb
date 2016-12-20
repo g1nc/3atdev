@@ -11,7 +11,8 @@ class SalariesController < ApplicationController
   end
 
   def destroy
-    Salary.find(params[:id]).delete_payment current_user
+    salary = Salary.find(params[:id])
+    salary.destroy if current_user == salary.user
     redirect_to root_path
   end
 end

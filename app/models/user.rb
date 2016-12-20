@@ -1,12 +1,11 @@
 class User < ApplicationRecord
+  attr_accessor :login
+  has_many :salaries
+  validates :username, format: { with: /^[a-zA-Z0-9_\.]*$/, multiline: true }, uniqueness: true
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :recoverable, :trackable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :rememberable, :validatable
-  has_many :salaries
-
-  validates_format_of :username, with: /^[a-zA-Z0-9_\.]*$/, multiline: true
-
-  attr_accessor :login
 
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
