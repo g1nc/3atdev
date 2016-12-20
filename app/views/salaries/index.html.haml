@@ -1,7 +1,7 @@
 .row
   .col-sm-10
     %h4
-      = "Payments from #{@salaries.first.starts_at.strftime("%b %d, %Y")} to #{@salaries.last.ends_at.strftime("%b %d, %Y")}" if @salaries.count > 0
+      = "Payments from #{format_starts @salaries.first} to #{format_ends @salaries.last}" if @salaries.count > 0
   .col-sm-2
     = link_to 'Add Payment', new_salary_path, class: 'btn submit-btn'
   .col-sm-12
@@ -16,7 +16,7 @@
         - @salaries.each do |salary|
           %tr
             %td= salary.id
-            %td= "#{salary.starts_at.strftime("%b %d, %Y")} - #{salary.ends_at.strftime("%b %d, %Y")}"
+            %td= "#{format_starts salary} - #{format_ends salary}"
             %td= salary.user.email
             %td
               - if salary.user == current_user
