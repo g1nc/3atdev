@@ -10,6 +10,18 @@ require 'rails_helper'
 #     end
 #   end
 # end
-RSpec.describe PaymentsHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+RSpec.describe SalariesHelper, type: :helper do
+  before { @salary = create(:salary)}
+
+  describe '#format_starts' do
+    it 'return formatted date' do
+      expect(helper.format_starts @salary).to eq(@salary.starts_at.strftime("%b %d, %Y"))
+    end
+  end
+
+  describe '#format_ends' do
+    it 'return formatted date' do
+      expect(helper.format_ends @salary).to eq(@salary.ends_at.strftime("%b %d, %Y"))
+    end
+  end
 end
