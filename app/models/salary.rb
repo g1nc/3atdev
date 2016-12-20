@@ -15,38 +15,30 @@ class Salary < ApplicationRecord
 
   private
 
-  def set_dates
-    last = last_payment
-    if last.nil?
-      self.starts_at = get_starts_at
-      self.ends_at = get_ends_at(self.starts_at)
-    else
-      self.starts_at = last.ends_at + 1.day
-      self.ends_at = get_ends_at(self.starts_at)
-    end
-  end
-
   def last_payment
     Salary.order(:created_at).last
   end
 
-  def get_starts_at
-    diff = {}
-    PAYMENT_DAYS.each_with_index do |val, index|
-      diff[index] = Date.today.day - val
-    end
-    nearest = diff.sort_by { |index, val| val }[0][0]
-    Date.new(Date.today.year, Date.today.month, PAYMENT_DAYS[nearest])
+  def set_dates
+    self.starts_at = get_starts_at
+    self.ends_at = get_ends_at(self.starts_at)
   end
 
-  def get_ends_at (date)
-    current_day_index = PAYMENT_DAYS.index(date.day)
-    if current_day_index == PAYMENT_DAYS.count - 1
-      end_date = Date.new(date.year, date.month, PAYMENT_DAYS[0] - 1)
-      end_date += 1.month
-    else
-      end_date = Date.new(date.year, date.month, PAYMENT_DAYS[current_day_index + 1] - 1)
+  def get_starts_at
+    last = last_payment
+    return last.ends_at.tomorrow if last
+
+    get_nearest_date(Date.today)
+  end
+
+  def get_ends_at(date)
+    get_nearest_date(date.tomorrow).yesterday
+  end
+
+  def get_nearest_date(date_from)
+    [date_from, date_from.at_beginning_of_month.next_month].each do |date|
+      result = PAYMENT_DAYS.map { |d| date.change(day: d) }.detect { |d| date <= d }
+      return result unless result.blank?
     end
-    end_date
   end
 end
