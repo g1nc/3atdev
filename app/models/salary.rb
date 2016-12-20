@@ -7,8 +7,6 @@ class Salary < ApplicationRecord
   FIRST_DATE = 5
   SECOND_DATE = 20
 
-  protected
-
   def set_dates
     if Salary.count.zero?
       if near_first_date?
@@ -34,13 +32,13 @@ class Salary < ApplicationRecord
       end
       self.ends_at = ends_at
     end
+  end
 
-    def near_first_date?
-      Date.today.day - FIRST_DATE < Date.today.day - SECOND_DATE
-    end
+  def near_first_date?
+    Date.today.day - FIRST_DATE < Date.today.day - SECOND_DATE
+  end
 
-    def delete_payment(user)
-      delete if self.user == user
-    end
+  def delete_payment(user)
+    delete if self.user == user
   end
 end
