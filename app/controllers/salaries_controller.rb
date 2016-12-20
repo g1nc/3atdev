@@ -11,7 +11,7 @@ class SalariesController < ApplicationController
   end
 
   def destroy
-    Salary.find(params[:id]).delete
+    Salary.find(params[:id]).delete_payment current_user
     redirect_to :back
   end
 end

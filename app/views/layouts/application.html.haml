@@ -1,6 +1,6 @@
 %hml
   %head
-    %title Salaries
+    %title Payments
     = csrf_meta_tags
 
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
@@ -13,8 +13,8 @@
           .navbar-header
             = link_to 'Application', root_path, class: 'navbar-brand'
           %ul.nav.navbar-nav
-            %li= link_to 'Main page', '#'
-            %li= link_to 'Payments', salaries_path
+            %li= link_to 'Main page', root_path
+            %li= link_to 'Payments', root_path
           %ul.nav.navbar-nav.navbar-right
             %li= link_to "Logout (#{current_user.email})", destroy_user_session_path, method: :delete
 

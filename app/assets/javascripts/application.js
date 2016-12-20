@@ -16,3 +16,14 @@
 //= require jquery
 //= require bootstrap-sprockets
 //= require_tree .
+
+$(function(){
+    $('.salary-delete').on('click', function(e){
+        e.preventDefault();
+        var id = $(this).data('salary');
+        var modal = $('#delete-confirmation');
+        modal.find('#confirmation-button').attr('href', '/salaries/' + id);
+        modal.modal();
+    })
+});
+

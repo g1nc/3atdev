@@ -3,8 +3,6 @@ class Salary < ApplicationRecord
 
   belongs_to :user
 
-  private
-
   FIRST_DATE = 5
   SECOND_DATE = 20
 
@@ -37,5 +35,9 @@ class Salary < ApplicationRecord
 
   def near_first_date?
     DateTime.now.day - FIRST_DATE < DateTime.now.day - SECOND_DATE
+  end
+
+  def delete_payment(user)
+    delete if self.user == user
   end
 end

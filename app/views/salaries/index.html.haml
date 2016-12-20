@@ -20,22 +20,22 @@
             %td= salary.user.email
             %td
               - if salary.user == current_user
-                = link_to 'Delete', salary, method: :delete, class: 'btn btn-danger salary-delete', data: { confirm: 'Are you sure?', id: salary.id }
+                %button.btn.btn-danger.salary-delete{ data: {salary: salary.id}} Delete
 
   .col-sm-12
     = paginate @salaries
 
 
-  .modal.fade
+  .modal.fade#delete-confirmation
     .modal-dialog
       .modal-content
         .modal-header
           %button.close
             %span &times;
-          %h4.modal-title Modal title
+          %h4.modal-title Are you sure?
 
         .modal-body
-          %p Text
+          %p Are you really want to delete this record?
         .modal-footer
-          %button.btn.btn-default{ data: { dissmiss: 'modal' } } Close
-          %button.btn.btn-primary Save
+          %a.btn.btn-default{ data: { dissmiss: 'modal' } } Cancel
+          %a.btn.btn-danger#confirmation-button{ data: {method: 'delete'} } Delete
