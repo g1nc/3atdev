@@ -24,6 +24,11 @@ $(function(){
         var modal = $('#delete-confirmation');
         modal.find('#confirmation-button').attr('href', '/salaries/' + id);
         modal.modal();
-    })
+    });
+
+    var closeModal = function() {
+        $('#delete-confirmation').modal('hide') };
+    $("[data-dissmiss='modal']").on('click', closeModal);
+    $(".close").on('click', closeModal);
 });
 
