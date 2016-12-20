@@ -21,9 +21,6 @@
     .container
       .row
         .col-lg-12
-          - if notice
-            .alert.alert-info= notice
-
-      .row
-        .col-lg-12
-          = yield
+          - if notice || alert
+            .alert.alert-info= notice || alert
+        = yield
